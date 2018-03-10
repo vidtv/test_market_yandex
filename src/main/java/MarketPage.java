@@ -1,6 +1,10 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MarketPage {
     public static WebDriver driver;
@@ -24,7 +28,7 @@ public class MarketPage {
     private By itemSearch = By.xpath("//input[@id='header-search']");
     private By suggestItem = By.xpath("//div[@class='suggest2__group'][1]//span[@class='suggest2-rich-item__text']/b");
 
-    /* метод возвращает true или false в зависимости от отрисовки списка категорий Маркета*/
+    /* метод возвращает true или false в зависимости от отрисовки списка категорий Маркета */
     public static boolean isElectronicaButtonExists(By electronica) {
         try {
              driver.findElement(electronica);
@@ -35,7 +39,7 @@ public class MarketPage {
             }
     }
 
-    /* метод возвращает ссылку на пункт "Электроника" в зависимости от отрисовки списка категорий Маркета*/
+    /* метод возвращает ссылку на пункт "Электроника" в зависимости от отрисовки списка категорий Маркета */
     public By electronicaButtonFind() {
         if (isElectronicaButtonExists(electronicaButton)) {
             return electronicaButton;
@@ -77,6 +81,23 @@ public class MarketPage {
         this.toApply();
     }
 
+    /* массив карточек товаров */
+    private List<WebElement> itemsList;
 
+    public void setItemsList() {
+        itemsList = driver.findElements(By.xpath("//div[@class='n-snippet-card2__title']/a"));
+    }
+
+    /* подсчет кол-ва карточек товаров на странице */
+    public int numOfItems() {
+        return itemsList.size();
+    }
+
+    /* название марки товара в первой карточке */
+    public String getNameOfFirstItem() {
+        WebElement firstItem = itemsList.get(0);
+        String itemTitle = firstItem.getAttribute("title");
+        return itemTitle;
+    }
 
 }
