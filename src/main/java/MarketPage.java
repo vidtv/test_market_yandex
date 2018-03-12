@@ -64,14 +64,6 @@ public class MarketPage {
         driver.findElement(chooseLG).click();
     }
 
-    public void getTVsList() {
-        this.yandexMarketButtonClick();
-        this.electronicaChoose();
-        this.televisorsChoose();
-        this.minPriceInput();
-        this.brandChoose();
-    }
-
     /* массив карточек товаров */
     private List<WebElement> itemsList;
 
@@ -79,8 +71,17 @@ public class MarketPage {
         itemsList = driver.findElements(By.xpath("//div[@class='n-snippet-card2__title']/a"));
     }
 
+    public void getTVsList() {
+        this.yandexMarketButtonClick();
+        this.electronicaChoose();
+        this.televisorsChoose();
+        this.minPriceInput();
+        this.brandChoose();
+        this.setItemsList();
+    }
+
     /* подсчет кол-ва карточек товаров на странице */
-    public int numOfItems() {
+    public int getNumOfItems() {
         return itemsList.size();
     }
 
@@ -106,10 +107,6 @@ public class MarketPage {
 
     public void getMarketPage() {
         this.getTVsList();
-        this.setItemsList();
-        this.numOfItems();
-        this.getNameOfFirstItem();
         this.searchFirstItem();
-        this.getSuggestedItem();
     }
 }
