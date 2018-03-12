@@ -3,7 +3,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MarketPage {
@@ -19,12 +18,9 @@ public class MarketPage {
     private By electronicaButton = By.xpath("//li[@data-department='Электроника']");
     private By electronicaButtonOther = By.xpath("//div[@class='n-navigation-horizontal__inner']/div[2]/a[text()='Электроника']");
     private By televisors = By.xpath("//a[text()='Аудио- и видеотехника']/following-sibling::div/a[text()='Телевизоры']");
-    private By minPriceInputField = By.xpath("//input[@id='glf-pricefrom-var']");
-    private By chooseSamsung = By.xpath("//label[contains(text(),'Samsung')]/../..");
-    private By chooseLG = By.xpath("//label[contains(text(),'LG')]/../..");
-    private By applyButton = By.xpath("//span[@class='button__text'][contains(text(),'Применить')]/..");
-    private By itemCard = By.xpath("//div[contains(@class, 'n-snippet-list')]/div[contains(@class, 'n-snippet-card2')]");
-    private By itemLink = By.xpath("//div[contains(@class, 'n-snippet-list')]/div[contains(@class, 'n-snippet-card2')][1]//div[@class='n-snippet-card2__title']/a");
+    private By minPriceInputField = By.xpath("//input[@name='Цена от']");
+    private By chooseSamsung = By.xpath("//span[contains(text(),'Samsung')]");
+    private By chooseLG = By.xpath("//span[contains(text(),'LG')]");
     private By itemSearch = By.xpath("//input[@id='header-search']");
     private By suggestItem = By.xpath("//div[@class='suggest2__group'][1]//span[@class='suggest2-rich-item__text']/b");
 
@@ -68,17 +64,12 @@ public class MarketPage {
         driver.findElement(chooseLG).click();
     }
 
-    public void toApply() {
-        driver.findElement(applyButton).click();
-    }
-
     public void getTVsList() {
         this.yandexMarketButtonClick();
         this.electronicaChoose();
         this.televisorsChoose();
         this.minPriceInput();
         this.brandChoose();
-        this.toApply();
     }
 
     /* массив карточек товаров */
@@ -100,4 +91,25 @@ public class MarketPage {
         return itemTitle;
     }
 
+    /* ввод названия первого товара в строку поиска */
+    public void searchFirstItem() {
+        String firstItemName = this.getNameOfFirstItem();
+        driver.findElement(itemSearch).sendKeys(firstItemName);
+    }
+
+    /* извлечение названия предложенного товара */
+    public String getSuggestedItem() {
+        WebElement suggestedItem = driver.findElement(suggestItem);
+        String suggestedItemName = suggestedItem.getText();
+        return suggestedItemName;
+    }
+
+    public void getMarketPage() {
+        this.getTVsList();
+        this.setItemsList();
+        this.numOfItems();
+        this.getNameOfFirstItem();
+        this.searchFirstItem();
+        this.getSuggestedItem();
+    }
 }

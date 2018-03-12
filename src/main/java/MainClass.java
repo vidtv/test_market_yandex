@@ -21,7 +21,6 @@ public class MainClass {
 
         MarketPage marketPage = new MarketPage(driver);
 
-        marketPage.getTVsList();
-        marketPage.setItemsList();
+        marketPage.getMarketPage();
     }
 }
