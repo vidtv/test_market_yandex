@@ -1,1 +1,1 @@
-Java + Selenium Webdriver + JUnit + PageObject
+Java + Selenium Webdriver + Selenide + JUnit + PageObject
